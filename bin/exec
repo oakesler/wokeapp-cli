@@ -2,6 +2,6 @@
 
 require_relative "../config/environment"
 
-puts "Gathering news, this may take a moment..."
+puts "Welcome to WokeApp!  Please wait a few moments for today's news..."
 execute_experiment
 welcome_menu

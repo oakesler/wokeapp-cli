@@ -1,8 +1,6 @@
 require_relative "../config/environment.rb"
-require "/home/oakesler/Development/awoke-cli/lib/story_object.rb"
-
+require "/home/oakesler/Development/wokeapp-cli/lib/story_object.rb"
 require 'nokogiri'
-
 require 'open-uri'
 @story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
 
