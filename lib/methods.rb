@@ -120,13 +120,13 @@ def the_splc_url_scraper
   html_splc = open("https://www.splcenter.org")
   doc_splc = Nokogiri::HTML(html_splc)
   step_a_1 = doc_splc.css("section#highlighted") 
-  step_a_2 = step_1.css("div.field-items")
+  step_a_2 = step_a_1.css("div.field-items")
   splc_url = step_a_2.xpath('//div/a/@href')[1].value
   step_b_1 = doc_splc.css("section#highlighted")
-  step_b_2 = step_1.css("div.field-items")
-  step_b_3 = step_2[0].children
-  step_b_4 = step_3[1].children.text
-  backup_url = step_4.match(/https.*\w/)[0]
+  step_b_2 = step_b_1.css("div.field-items")
+  step_b_3 = step_b_2[0].children
+  step_b_4 = step_b_3[1].children.text
+  backup_url = step_b_4.match(/https.*\w/)[0]
   error_url = "Sorry, still waiting on article URL from SPLCenter.org..."
   if !valid_url?("#{splc_url}") && !!valid_url?("#{backup_url}")
     backup_url
@@ -141,7 +141,7 @@ end
     #elsif !!splc_url.scan(/\w/)
     #splc_url
     #else 
-    error_url
+    #error_url
   #end
 #end
 
@@ -161,7 +161,6 @@ def the_aclu_abstract_scraper
 end
 
 def the_amnesty_abstract_scraper
-  binding.pry
   html_amnesty = open("#{the_amnesty_url_scraper}")
   doc_amnesty = Nokogiri::HTML(html_amnesty)
   amnesty_abstract = doc_amnesty.css("p")[6].text
