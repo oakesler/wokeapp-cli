@@ -3,6 +3,7 @@ require "/home/oakesler/Development/wokeapp-cli/lib/story_object.rb"
 require 'nokogiri'
 require 'open-uri'
 require 'pry'
+require "uri"
 
 @story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
 
@@ -59,6 +60,13 @@ def the_splc_headline_scraper
   end
 end
 
+def valid_url?(url)
+  uri = URI.parse(url)
+  uri.is_a?(URI::HTTP) && !uri.host.nil?
+  rescue URI::InvalidURIError
+  true
+end
+
 def the_aclu_url_scraper
   html_aclu = open("https://www.aclu.org")
   doc_aclu = Nokogiri::HTML(html_aclu)
@@ -107,6 +115,7 @@ def the_hrw_url_scraper
   end
 end
 
+#uses URL validator as experiment
 def the_splc_url_scraper
   html_splc = open("https://www.splcenter.org")
   doc_splc = Nokogiri::HTML(html_splc)
@@ -119,14 +128,22 @@ def the_splc_url_scraper
   step_b_4 = step_3[1].children.text
   backup_url = step_4.match(/https.*\w/)[0]
   error_url = "Sorry, still waiting on article URL from SPLCenter.org..."
-  if !splc_url.scan(/\w/) && !!backup_url.scan(/\w/)
+  if !valid_url?("#{splc_url}") && !!valid_url?("#{backup_url}")
     backup_url
-  if !!splc_url.scan(/\w/)
+    elsif !!valid_url?("#{splc_url}")
     splc_url
   else 
     error_url
   end
 end
+  #if !splc_url.scan(/\w/) && !!backup_url.scan(/\w/)
+    #backup_url
+    #elsif !!splc_url.scan(/\w/)
+    #splc_url
+    #else 
+    error_url
+  #end
+#end
 
 def the_aclu_abstract_scraper
   html_aclu = open("#{the_aclu_url_scraper}")
