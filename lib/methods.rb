@@ -251,6 +251,8 @@ def welcome_menu
 	input = gets.strip
 	if input == "exit"
 		puts "Thanks for using WokeApp!"
+		puts "       "
+		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
 		elsif input == "story"
 		story_selector
 		elsif input == "random"
