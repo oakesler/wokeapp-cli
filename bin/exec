@@ -2,6 +2,4 @@
 
 require_relative "../config/environment"
 
-puts "Welcome to WokeApp!  Please wait a few moments for today's news..."
-execute_experiment
-welcome_menu
+scrape_executor
