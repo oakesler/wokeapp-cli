@@ -2,8 +2,9 @@ require_relative "../config/environment.rb"
 require "/home/oakesler/Development/wokeapp-cli/lib/story_object.rb"
 require 'nokogiri'
 require 'open-uri'
+require 'pry'
 
-#@story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
+@story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
 
 
 def the_aclu_headline_scraper
@@ -113,7 +114,7 @@ def the_splc_url_scraper
   step_2 = step_1.css("div.field-items")
   step_3 = step_2[0].children
   step_4 = step_3[1].children.text
-  splc_url = step_4.match(/https.*\w/)
+  splc_url = step_4.match(/https.*\w/)[0]
   error_url = "Sorry, still waiting on article URL from SPLCenter.org..."
   if !!splc_url.scan(/\w/)
     splc_url
