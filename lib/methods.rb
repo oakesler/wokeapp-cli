@@ -2,7 +2,8 @@ require_relative "../config/environment.rb"
 require "/home/oakesler/Development/wokeapp-cli/lib/story_object.rb"
 require 'nokogiri'
 require 'open-uri'
-@story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
+
+#@story_hash = {:ACLU => " " , :Amnesty => " ", :HRW => " " , :SPLC => " ", :Backup => " "}
 
 
 def the_aclu_headline_scraper
@@ -11,21 +12,13 @@ def the_aclu_headline_scraper
   step_1 = doc_aclu.css("div#hp__top_spotlight")
   headline_aclu = step_1.css("div")[4].children[0].text.strip
   backup_headline = doc_aclu.css('span.is-uppercase').text
-<<<<<<< HEAD
   error_headline = "Sorry, still waiting on headline from ACLU.org..."
-=======
-  error = "Sorry, still waiting on headline from ACLU.org..."
->>>>>>> 80c54925edf85589516d0db79b39e47cd1dcf2e3
   if !headline_aclu.scan(/\w/) && !!backup_headline.scan(/\w/)
     backup_headline
     elsif !!headline_aclu.scan(/\w/)
     headline_aclu
   else 
-<<<<<<< HEAD
     error_headline
-=======
-    error
->>>>>>> 80c54925edf85589516d0db79b39e47cd1dcf2e3
   end
 end
 
@@ -33,19 +26,10 @@ def the_amnesty_headline_scraper
   html_amnesty = open("https://www.amnesty.org/en/")
   doc_amnesty = Nokogiri::HTML(html_amnesty)
   headline_amnesty = "#{doc_amnesty.css('span.heading--tape').text}: #{doc_amnesty.css('p.image-headline__copy').text}"
-<<<<<<< HEAD
   error_headline = "Sorry, still waiting on headline from Amnesty International USA"
-  if !!headline_amnesty.scan(/\w/)
-=======
-  
-  
   if headline_amnesty.scan(/\w/)
     headline_amnesty
-    elsif !headline_amnesty.scan(/\w/)
-    c
->>>>>>> 80c54925edf85589516d0db79b39e47cd1dcf2e3
-    headline_amnesty
-  else 
+  else
     error_headline
   end
 end
