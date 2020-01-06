@@ -7,7 +7,7 @@ class StoryUrl
   def initialize(url)
     @error_url = "Sorry, we're still generating this URL. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
+    @html_doc = Nokogiri::HTML(open(@source_url))
     @story_url = self.url_maker
   end
   
@@ -18,10 +18,8 @@ class StoryUrl
     true
   end
   
-  
-  
   def url_maker
-    if @source_url == "www.ACLU.org"
+    if @source_url == "https://www.aclu.org/"
       step_1 = @html_doc.css("div#hp__top_spotlight")
       step_2 = step_1.css("a")[0].to_a
       aclu_url = step_2[0][1]

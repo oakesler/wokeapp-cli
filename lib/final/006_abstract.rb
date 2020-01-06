@@ -8,12 +8,12 @@ class Abstract
   def initialize(url)
     @error_abstract = "Sorry, we're still generating this abstract. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
+    @html_doc = Nokogiri::HTML(open(@source_url))
     @abstract = self.abstract_maker
   end
   
   def abstract_maker
-    if @source_url == "www.ACLU.org"
+    if @source_url == "https://www.aclu.org/"
       aclu_abstract = "#{@html_doc.css("p")[1].text}     #{@html_doc.css("p")[2].text}"
       backup_abstract = @html_doc.css("div#tabs").text
       if !!aclu_abstract.scan(/\w/)

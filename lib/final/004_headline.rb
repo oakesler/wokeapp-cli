@@ -7,12 +7,12 @@ class Headline
   def initialize(url)
     @error_headline = "Sorry, we're still generating this headline. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
+    @html_doc = Nokogiri::HTML(open(@source_url))
     @headline = self.headline_maker
   end
   
   def headline_maker
-    if @source_url == "www.ACLU.org"
+    if @source_url == "https://www.aclu.org/"
       step_1 = @html_doc.css("div#hp__top_spotlight")
       headline_aclu = step_1.css("div")[4].children[0].text.strip
       backup_headline = @html_doc.css('span.is-uppercase').text
