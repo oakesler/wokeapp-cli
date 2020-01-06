@@ -1,9 +1,7 @@
 source "https://rubygems.org"
 
 # Specify your gem's dependencies in wokeapp-cli.gemspec
-gemspec
+#gemspec
 
 gem "nokogiri"
 gem "pry"
-gem 'open-uri'
-gem "uri"

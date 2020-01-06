@@ -1,9 +1,4 @@
-require_relative "../config/environment"
-
-require 'nokogiri'
-require 'open-uri'
-require 'pry'
-require "uri"
+require "./config/environment"
 
 class Headline
   

@@ -1,9 +1,5 @@
-require_relative "../config/environment"
+require "./config/environment"
 
-require 'nokogiri'
-require 'open-uri'
-require 'pry'
-require "uri"
 
 class Abstract 
   
