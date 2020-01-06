@@ -4,9 +4,8 @@ class Story
   attr_accessor :headline, :abstract, :source, :story_url, :home_url
 
   def initialize(source_hash)
-    @source = source_hash[name]
-    @home_url = source_hash[url]
-    story = @source.new(@home_url)
+    @source = source_hash[:name]
+    @home_url = source_hash[:url]
     @headline = Headline.new(@home_url)
     @story_url = StoryUrl.new(@home_url)
     @abstract = Abstract.new(@story_url)

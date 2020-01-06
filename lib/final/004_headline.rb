@@ -7,7 +7,7 @@ class Headline
   def initialize(url)
     @error_headline = "Sorry, we're still generating this headline. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open(@source_url)}")
+    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
     @headline = self.headline_maker
   end
   
