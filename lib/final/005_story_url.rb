@@ -7,7 +7,7 @@ class StoryUrl
   def initialize(url)
     @error_url = "Sorry, we're still generating this URL. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open(@source_url)}")
+    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
     @story_url = self.url_maker
   end
   

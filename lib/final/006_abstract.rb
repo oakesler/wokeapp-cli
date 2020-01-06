@@ -8,7 +8,7 @@ class Abstract
   def initialize(url)
     @error_abstract = "Sorry, we're still generating this abstract. Please check back later!"
     @source_url = url
-    @html_doc = Nokogiri::HTML("#{open(@source_url)}")
+    @html_doc = Nokogiri::HTML("#{open("#{@source_url}")}")
     @abstract = self.abstract_maker
   end
   
