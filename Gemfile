@@ -5,3 +5,5 @@ gemspec
 
 gem "nokogiri"
 gem "pry"
+gem 'open-uri'
+gem "uri"

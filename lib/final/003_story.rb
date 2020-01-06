@@ -11,6 +11,22 @@ class Story
     @story_url = StoryUrl.new(@home_url)
     @abstract = Abstract.new(@story_url)
   end
+  
+  def story_display
+    puts "                      "
+    puts "#{@source} (#{@home_url})"
+    puts "                          "
+    puts "------------------------------------------"
+    puts "#{@headline}"
+    puts "------------------------------------------"
+    puts "                            "
+    puts "#{@abstract}"
+    puts "                             "
+    puts "Continue reading at"
+    puts "#{@story_url}"
+    puts "                                 "
+  end
+end
 end
 
 
