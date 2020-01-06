@@ -1,3 +1,5 @@
+require_relative "../config/environment"
+
 class StoryUrl 
   
   attr_accessor :source_url, :html_doc, :story_url, :error_url

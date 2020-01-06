@@ -1,3 +1,5 @@
+require_relative "../config/environment"
+
 class CurrentNews
   
   attr_accessor :source_one, :source_two, :source_three, :source_four

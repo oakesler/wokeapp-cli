@@ -1,3 +1,5 @@
+require_relative "../config/environment"
+
 class Abstract 
   
   attr_accessor :source_url, :html_doc, :abstract, :error_abstract
