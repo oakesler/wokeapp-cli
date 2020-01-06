@@ -1,5 +1,10 @@
 require_relative "../config/environment"
 
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+require "uri"
+
 class Controller
   
   attr_accessor :news_hash, :current_news

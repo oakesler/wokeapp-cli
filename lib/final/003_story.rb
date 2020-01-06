@@ -1,5 +1,10 @@
 require_relative "../config/environment"
 
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+require "uri"
+
 class Story 
   attr_accessor :headline, :abstract, :source, :story_url, :home_url
 

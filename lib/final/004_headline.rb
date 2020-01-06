@@ -1,5 +1,10 @@
 require_relative "../config/environment"
 
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+require "uri"
+
 class Headline
   
   attr_accessor :source_url, :html_doc, :headline, :error_headline

@@ -1,5 +1,10 @@
 require_relative "../config/environment"
 
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+require "uri"
+
 class Abstract 
   
   attr_accessor :source_url, :html_doc, :abstract, :error_abstract

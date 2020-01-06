@@ -1,5 +1,10 @@
 require_relative "../config/environment"
 
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+require "uri"
+
 class CurrentNews
   
   attr_accessor :source_one, :source_two, :source_three, :source_four
