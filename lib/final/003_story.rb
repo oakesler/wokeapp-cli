@@ -7,7 +7,7 @@ class Story
     @source = source_hash[:name]
     @home_url = source_hash[:url]
     @headline = Headline.new(@home_url)
-    @story_url = StoryUrl.new(@home_url)
+    @story_url = StoryUrl.new(@home_url).url
     @abstract = Abstract.new(@story_url)
   end
   
