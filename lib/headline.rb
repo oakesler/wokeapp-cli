@@ -1,6 +1,6 @@
-class Headline 
+class Headline
   
-  attr_accessor :source_url, :html_doc, :headline
+  attr_accessor :source_url, :html_doc, :headline, :error_headline
   
   def initialize(url)
     @error_headline = "Sorry, we're still generating this headline. Please check back later!"
@@ -10,7 +10,7 @@ class Headline
   end
   
   def headline_maker
-    if self.source_url == "www.ACLU.org"
+    if @source_url == "www.ACLU.org"
       step_1 = @html_doc.css("div#hp__top_spotlight")
       headline_aclu = step_1.css("div")[4].children[0].text.strip
       backup_headline = @html_doc.css('span.is-uppercase').text
@@ -21,21 +21,21 @@ class Headline
       else
         @error_headline
       end
-    elsif source_url == "https://www.amnesty.org/en/"
+    elsif @source_url == "https://www.amnesty.org/en/"
       headline_amnesty = "#{@html_doc.css('span.heading--tape').text}: #{@html_doc.css('p.image-headline__copy').text}"
       if headline_amnesty.scan(/\w/)
         headline_amnesty
       else
         @error_headline
       end
-    elsif source_url == "https://www.hrw.org/#"
+    elsif @source_url == "https://www.hrw.org/#"
       headline_hrw = @html_doc.css('h3.billboard-title').text
       if !!headline_hrw.scan(/\w/)
         headline_hrw
       else
         @error_headline
       end
-    elsif source_url == "https://www.splcenter.org"
+    elsif @source_url == "https://www.splcenter.org"
       headline_splc = @html_doc.css("h1").first.text
       if headline_splc.scan(/\w/)
         headline_splc
