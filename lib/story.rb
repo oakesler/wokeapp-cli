@@ -2,14 +2,14 @@ require_relative "../config/environment"
 
 class Story 
   attr_accessor :headline, :abstract, :source, :story_url, :home_url
-  
-  array = ["American Civil Liberties Union", "Amnesty International US", "Human Rights Watch", "Southern Poverty Law Center"]
-  def initialize(home_url)
-    @source = "ACLU"
-    @home_url = home_url
-    @headline = self.headline_maker(home_url)
-    @story_url = self.url_maker(home_url)
-    @abstract = self.abstract_maker(self.story_url)
+
+  def initialize(source_hash)
+    @source = source_hash[name]
+    @home_url = source_hash[url]
+    story = @source.new(@home_url)
+    @headline = Headline.new(@home_url)
+    @story_url = StoryUrl.new(@home_url)
+    @abstract = Abstract.new(@story_url)
   end
 
 

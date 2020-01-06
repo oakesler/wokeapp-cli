@@ -1,11 +1,17 @@
 require_relative "../config/environment"
 
-class ACLU_Scraper 
-  attr_accessor :headline, :abstract, :source, :story_url, :home_url
+class ACLU 
+  attr_accessor :home_url, :headline, :abstract, :story_url,
   
+  def initialize(url)
+    @home_url = url 
+    @headline = self.headline
+    @story_url = self.url_maker
+    @abstract = self.
+  end
 
-  def headline
-    html_aclu = open("www.ACLU.org")
+  def headline_maker
+    html_aclu = open(self.home_url)
     doc_aclu = Nokogiri::HTML(html_aclu)
     step_1 = doc_aclu.css("div#hp__top_spotlight")
     headline_aclu = step_1.css("div")[4].children[0].text.strip
@@ -14,14 +20,14 @@ class ACLU_Scraper
     if !headline_aclu.scan(/\w/) && !!backup_headline.scan(/\w/)
       backup_headline
       elsif !!headline_aclu.scan(/\w/)
-      self.headline = headline_aclu
+      headline_aclu
     else
-      self.headline = error_headline
+      error_headline
     end
   end
   
   def url_maker
-    html_aclu = open("www.ACLU.org")
+    html_aclu = open(self.home_url)
     doc_aclu = Nokogiri::HTML(html_aclu)
     step_1 = doc_aclu.css("div#hp__top_spotlight")
     step_2 = step_1.css("a")[0].to_a
@@ -42,7 +48,7 @@ class ACLU_Scraper
     end
   end
   
-  def abstract
+  def abstract_maker
     html_aclu = open(self.story_url)
     doc_aclu = Nokogiri::HTML(html_aclu)
     aclu_abstract = "#{doc_aclu.css("p")[1].text}     #{doc_aclu.css("p")[2].text}"
