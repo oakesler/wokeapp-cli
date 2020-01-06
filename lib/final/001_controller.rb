@@ -44,13 +44,16 @@ class Controller
     input = gets.strip
     if input == "1"
       @current_news.source_one.story_display
-      #self.source_one.display
+      headline_display
       elsif input == "2"
       @current_news.source_two.story_display
+      headline_display
       elsif input == "3"
       @current_news.source_three.story_display
+      headline_display
       elsif input == "4"
       @current_news.source_four.story_display
+      headline_display
       elsif input == "back"
       welcome_menu
     else 
@@ -62,83 +65,23 @@ def randomizer
   sample_array = [1, 2, 3, 4]
   x = sample_array.sample
   if x == 1
-    @current_news.story_one.display
+    @current_news.source_one.story_display
+    sample_array.delete(1)
+    welcome_menu
     elsif x == 2
-    @current_news.story_one.display
+    @current_news.source_two.story_display
+    sample_array.delete(2)
+    welcome_menu
     elsif x == 3
-    @current_news.story_one.display
+    @current_news.source_three.story_display
+    sample_array.delete(3)
+    welcome_menu
     elsif x == 4
-    @current_news.story_one.display
+    @current_news.source_four.story_display
+    sample_array.delete(4)
+    welcome_menu
   else 
-    headline_selector
+    welcome_menu
   end
 end
-  
-  
 end
-
-
-###############################################################################
-
-def aclu_story_display
-  puts "                      "
-  puts "#{@story_hash[:ACLU].source} (#{@story_hash[:ACLU].home_url})"
-  puts "                          "
-  puts "------------------------------------------"
-  puts "#{@story_hash[:ACLU].headline}"
-  puts "------------------------------------------"
-  puts "                            "
-  puts "#{@story_hash[:ACLU].abstract}"
-  puts "                             "
-  puts "Continue reading at"
-  puts "#{@story_hash[:ACLU].story_url}"
-  puts "                                 "
-  welcome_menu
-end
-
-def amnesty_story_display
-  puts "                          "
-  puts "#{@story_hash[:Amnesty].source} (#{@story_hash[:Amnesty].home_url})"
-  puts "------------------------------------------"
-  puts "#{@story_hash[:Amnesty].headline}"
-  puts "------------------------------------------"
-  puts "                               "
-  puts "#{@story_hash[:Amnesty].abstract}"
-  puts "              "
-  puts "Continue reading at..."
-  puts "#{@story_hash[:Amnesty].story_url}"
-  puts "                    "
-  welcome_menu
-end
-
-def hrw_story_display
-  puts "                           "
-  puts "#{@story_hash[:HRW].source} (#{@story_hash[:HRW].home_url})"
-  puts "------------------------------------------"
-  puts "#{@story_hash[:HRW].headline}"
-  puts "------------------------------------------"
-  puts "                                 "
-  puts "#{@story_hash[:HRW].abstract}"
-  puts "    "
-  puts "Continue reading at ..." 
-  puts "#{@story_hash[:HRW].story_url}"
-  puts "           "
-  welcome_menu
-end
-
-def splc_story_display
-  puts "                             "
-  puts "#{@story_hash[:SPLC].source} (#{@story_hash[:SPLC].home_url})"
-  puts "------------------------------------------"
-  puts "#{@story_hash[:SPLC].headline}"
-  puts "------------------------------------------"
-  puts "                               "
-  puts "#{@story_hash[:SPLC].abstract}"
-  puts "                               "
-  puts "Continue reading at..."
-  puts "#{@story_hash[:SPLC].story_url}"
-  puts "                          "
-  welcome_menu
-end
-
-

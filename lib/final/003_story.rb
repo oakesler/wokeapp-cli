@@ -16,13 +16,14 @@ class Story
     puts "#{@source} (#{@home_url})"
     puts "                          "
     puts "------------------------------------------"
-    puts "#{@headline}"
+    puts "#{@headline.headline}"
     puts "------------------------------------------"
     puts "                            "
-    puts "#{@abstract}"
+    puts "#{@abstract.abstract}"
     puts "                             "
     puts "Continue reading at"
     puts "#{@story_url}"
     puts "                                 "
+    
   end
 end

@@ -1,6 +1,5 @@
 require "./config/environment"
 
-
 class Abstract 
   
   attr_accessor :source_url, :html_doc, :abstract, :error_abstract
@@ -13,7 +12,7 @@ class Abstract
   end
   
   def abstract_maker
-    if @source_url == "https://www.aclu.org/"
+    if !!@source_url.scan(/aclu/)
       aclu_abstract = "#{@html_doc.css("p")[1].text}     #{@html_doc.css("p")[2].text}"
       backup_abstract = @html_doc.css("div#tabs").text
       if !!aclu_abstract.scan(/\w/)
@@ -23,8 +22,7 @@ class Abstract
       else 
         @error_abstract
       end
-      ####################################################################
-      elsif source_url == "https://www.amnesty.org/en/"
+      elsif !!@source_url.scan(/amnesty/)
       amnesty_abstract = @html_doc.css("p")[6].text
       backup_abstract = @html_doc.css("p").text
       if !!amnesty_abstract.scan(/\w/)
@@ -34,8 +32,7 @@ class Abstract
       else 
         @error_abstract
       end
-      ####################################################################
-      elsif source_url == "https://www.hrw.org/#"
+      elsif !!@source_url.scan(/hrw/)
       step_1 = @html_doc.css("p")
       hrw_abstract = "#{step_1[4].text}   #{step_1[5].text}   #{step_1[6].text}"
       if !!hrw_abstract.scan(/\w/)
@@ -43,8 +40,7 @@ class Abstract
       else 
         @error_abstract
       end
-      #######################################################################
-      elsif source_url == "https://www.splcenter.org"
+      elsif !!@source_url.scan(/splc/)
       html_splc = open("#{the_splc_url_scraper}")
       doc_splc = Nokogiri::HTML(html_splc)
       splc_abstract = @html_doc.css("p").first.text
