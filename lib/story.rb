@@ -11,6 +11,7 @@ class Story
     @story_url = StoryUrl.new(@home_url)
     @abstract = Abstract.new(@story_url)
   end
+end
 
 
 
