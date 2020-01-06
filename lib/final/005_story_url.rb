@@ -51,7 +51,7 @@ class StoryUrl
     else
       @error_url
     end
-  end 
+  #end
   ############################################################
   elsif @source_url == "https://www.hrw.org"
   hrw_url = "https://www.hrw.org#{@html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]}"
@@ -61,32 +61,28 @@ class StoryUrl
     @error_url
   end
   #############################################################
-  #uses URL validator as experiment
   elsif @source_url == "https://www.splcenter.org" 
-  step_a_1 = @html_doc.css("section#highlighted") 
-  step_a_2 = step_a_1.css("div.field-items")
-  splc_url = step_a_2.xpath('//div/a/@href')[1].value
-  if !!valid_url?("#{splc_url}")
-    splc_url
-    elsif !valid_url?("#{splc_url}")
-    step_b_1 = @html_doc.css("section#highlighted")
-    step_b_2 = step_b_1.css("div.field-items")
-    step_b_3 = step_b_2[0].children
-    step_b_4 = step_b_3[1].children.text
-    backup_url = step_b_4.match(/https.*\w/)[0]
-    if !!valid_url?("#{backup_url}")
-      backup_url
-    else
+    step_a_1 = @html_doc.css("section#highlighted") 
+    step_a_2 = step_a_1.css("div.field-items")
+    splc_url = step_a_2.xpath('//div/a/@href')[1].value
+    if !!valid_url?("#{splc_url}")
+      splc_url
+      elsif !valid_url?("#{splc_url}")
+      step_b_1 = @html_doc.css("section#highlighted")
+      step_b_2 = step_b_1.css("div.field-items")
+      step_b_3 = step_b_2[0].children
+      step_b_4 = step_b_3[1].children.text
+      backup_url = step_b_4.match(/https.*\w/)[0]
+        if !!valid_url?("#{backup_url}")
+          backup_url
+        else
+          @error_url
+        end
+      else
+        @error_url
+      end
+    else 
       @error_url
     end
-  else 
-    @error_url
-  end
-else 
-    "Error"
   end
 end
-
-
-
-
