@@ -1,15 +1,21 @@
-class Compiled_News_Object
+class CurrentNews
   
-  attr_accessor :ACLU_story, :Amnesty_story, :HRW_story, :SPLC_story
+  attr_accessor :source_one, :source_two, :source_three, :source_four
   
-  def initialize(ACLU, Amnesty, HRW, SPLC)
-    @ACLU_story = ACLU 
-    @Amnesty_story = Amnesty 
-    @HRW_story = HRW 
-    @SPLC_story = SPLC 
+  def initialize(news_hash)
+    @source_one = Story.new(news_hash[:source_one])
+    @source_two = Story.new(news_hash[:source_two])
+    @source_three = Story.new(news_hash[:source_three])
+    @source_four = Story.new(news_hash[:source_four])
   end
+end
   
-  Compiled_News_Object.new("www.ACLU.org", "https://www.amnesty.org/en/", "https://www.hrw.org/#", "https://www.splcenter.org")
+  
+  
+  
+  
+  
+  #Compiled_News_Object.new("www.ACLU.org", "https://www.amnesty.org/en/", "https://www.hrw.org/#", "https://www.splcenter.org")
 
 
 #def aclu_object_maker
@@ -54,3 +60,7 @@ class Compiled_News_Object
   #splc_object_maker
   #welcome_menu
 #end
+
+##########################################
+
+#news hash = {:source_one => "American Civil Liberties Union", :source_two => "Amnesty International US", :source_three => "Human Rights Watch", :source_four =>"Southern Poverty Law Center"}

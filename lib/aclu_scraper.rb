@@ -1,18 +1,11 @@
 require_relative "../config/environment"
 
-class ACLU_Story 
+class ACLU_Scraper 
   attr_accessor :headline, :abstract, :source, :story_url, :home_url
   
-  def initialize(source, home_url)
-    @source = source
-    @home_url = home_url
-    @headline = self.headline(home_url)
-    @abstract = self.abstract
-    @story_url = self.story_url
-  end
-  
-  def headline_maker(home_url)
-    html_aclu = open(home_url)
+
+  def headline
+    html_aclu = open("www.ACLU.org")
     doc_aclu = Nokogiri::HTML(html_aclu)
     step_1 = doc_aclu.css("div#hp__top_spotlight")
     headline_aclu = step_1.css("div")[4].children[0].text.strip
@@ -21,14 +14,14 @@ class ACLU_Story
     if !headline_aclu.scan(/\w/) && !!backup_headline.scan(/\w/)
       backup_headline
       elsif !!headline_aclu.scan(/\w/)
-      headline_aclu
+      self.headline = headline_aclu
     else
-      error_headline
+      self.headline = error_headline
     end
   end
   
-  def url_maker(home_url)
-    html_aclu = open(home_url)
+  def url_maker
+    html_aclu = open("www.ACLU.org")
     doc_aclu = Nokogiri::HTML(html_aclu)
     step_1 = doc_aclu.css("div#hp__top_spotlight")
     step_2 = step_1.css("a")[0].to_a
@@ -41,15 +34,15 @@ class ACLU_Story
     backup_url = step_a_5.attributes["href"].value
     error_url = "Sorry, waiting on article URL from ACLU.org..."
     if !aclu_url.scan(/\w/) && !!backup_url.scan(/\w/)
-      backup_url
+      self.story_url = backup_url
       elsif !!aclu_url.scan(/\w/)
-      aclu_url
+      self.story_url = aclu_url
     else
-      error_url
+      self.story_url = error_url
     end
   end
   
-  def abstract_maker
+  def abstract
     html_aclu = open(self.story_url)
     doc_aclu = Nokogiri::HTML(html_aclu)
     aclu_abstract = "#{doc_aclu.css("p")[1].text}     #{doc_aclu.css("p")[2].text}"
@@ -58,9 +51,9 @@ class ACLU_Story
     if !aclu_abstract.scan(/\w/) && !!aclu_abstract.scan(/\w/)
       backup_abstract
       elsif !!aclu_abstract.scan(/\w/)
-      aclu_abstract
+      self.abstract = aclu_abstract
     else
-      error_abstract
+      self.abstract = error_abstract
     end
   end
 end

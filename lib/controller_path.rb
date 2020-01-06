@@ -1,0 +1,1 @@
+CurrentNews.new(news_hash = {:source_one => name: "American Civil Liberties Union", url: "www.ACLU.org", :source_two => name: "Amnesty International US", url: "https://www.amnesty.org/en/", :source_three => name: "Human Rights Watch", url: "https://www.hrw.org/#", :source_four => name: "Southern Poverty Law Center", url: "https://www.splcenter.org"})
