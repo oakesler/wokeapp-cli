@@ -232,14 +232,14 @@ def splc_object_maker
   @story_hash[:SPLC] = splc_story
 end
 
-def scrape_executor
-  puts "Welcome to WokeApp!  Please wait a few moments for today's news..."
-  aclu_object_maker
-  amnesty_object_maker
-  hrw_object_maker
-  splc_object_maker
-  welcome_menu
-end
+#def scrape_executor
+  #puts "Welcome to WokeApp!  Please wait a few moments for today's news..."
+  #aclu_object_maker
+  #amnesty_object_maker
+  #hrw_object_maker
+  #splc_object_maker
+  #welcome_menu
+#end
 
 def welcome_menu
   puts "                                      "
