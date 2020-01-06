@@ -344,7 +344,7 @@ def story_selector
     elsif input == "4"
     splc_story_display
     elsif input == "back"
-    story_selector_segue
+    story_selector
   else 
     menu_redirect
   end
@@ -362,6 +362,6 @@ def randomizer
     elsif x == 4
     splc_story_display
   else 
-    story_selector_segue
+    story_selector
   end
 end
