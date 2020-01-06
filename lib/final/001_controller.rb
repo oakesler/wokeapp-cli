@@ -34,24 +34,25 @@ class Controller
     puts "                         "
     puts "Please select a headline by number (1-4)"
     puts "                                         "
-    puts "1. #{@current_news.source_one.headline}"
-    puts "2. #{@current_news.source_two.headline}"
-    puts "3. #{@current_news.source_three.headline}"
-    puts "4. #{@current_news.source_four.headline}"
+    puts "1. #{@current_news.source_one.headline.headline}"
+    puts "2. #{@current_news.source_two.headline.headline}"
+    puts "3. #{@current_news.source_three.headline.headline}"
+    puts "4. #{@current_news.source_four.headline.headline}"
     puts "                                        "
     puts "...or type 'back' to return to menu"
     puts "                           "
     input = gets.strip
     if input == "1"
-      @current_news.source_one.display
+      @current_news.source_one.story_display
+      #self.source_one.display
       elsif input == "2"
-      @current_news.source_two.display
+      @current_news.source_two.story_display
       elsif input == "3"
-      @current_news.source_three.display
+      @current_news.source_three.story_display
       elsif input == "4"
-      @current_news.source_four.display
+      @current_news.source_four.story_display
       elsif input == "back"
-      headline_display
+      welcome_menu
     else 
       welcome_menu
     end
