@@ -73,42 +73,14 @@ class StoryUrl
     step_b_4 = step_b_3[1].children.text
     backup_url = step_b_4.match(/https.*\w/)[0]
     if !!valid_url?("#{backup_url}")
-      
-    backup_url
-    elsif !!valid_url?("#{splc_url}")
-    splc_url
+      backup_url
+    else
+      @error_url
+    end
   else 
     @error_url
   end
-end
-  
-  
-  
-  
-  
-     
-     
-      else
-        @error_url
-      end
-    elsif @source_url == "https://www.hrw.org/#"
-    
-    
-
-        
-        
-      else
-        @error_url 
-      end
-    elsif @source_url == "https://www.splcenter.org"
-    
-      
-        
-        
-      else
-        @error_url 
-      end
-    else
+else 
     "Error"
   end
 end
@@ -116,26 +88,3 @@ end
 
 
 
-
-#uses URL validator as experiment
-def the_splc_url_scraper
-  html_splc = open("https://www.splcenter.org")
-  doc_splc = Nokogiri::HTML(html_splc)
-  step_a_1 = doc_splc.css("section#highlighted") 
-  step_a_2 = step_a_1.css("div.field-items")
-  splc_url = step_a_2.xpath('//div/a/@href')[1].value
-  step_b_1 = doc_splc.css("section#highlighted")
-  step_b_2 = step_b_1.css("div.field-items")
-  step_b_3 = step_b_2[0].children
-  step_b_4 = step_b_3[1].children.text
-  backup_url = step_b_4.match(/https.*\w/)[0]
-  error_url = "Sorry, still waiting on article URL from SPLCenter.org..."
-  if !valid_url?("#{splc_url}") && !!valid_url?("#{backup_url}")
-    backup_url
-    elsif !!valid_url?("#{splc_url}")
-    splc_url
-  else 
-    error_url
-  end
-end
-    
