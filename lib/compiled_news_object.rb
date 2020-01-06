@@ -8,6 +8,8 @@ class Compiled_News_Object
     @HRW_story = HRW 
     @SPLC_story = SPLC 
   end
+  
+  Compiled_News_Object.new("www.ACLU.org", "https://www.amnesty.org/en/", "https://www.hrw.org/#", "https://www.splcenter.org")
 
 
 #def aclu_object_maker
