@@ -6,14 +6,14 @@ class Display
     Scraper.new
   end
   
-  def welcome_menu
-    puts "                                      "
-    puts "Select by story or use our randomizer."
-	  puts "For story selection, type ‘story'"
-	  puts "For randomizer, type ‘random'"
-	  puts "To exit, type ‘exit’"
-	  puts "                       "
-	end
+  #def welcome_menu
+    #puts "                                      "
+    #puts "Select by story or use our randomizer."
+	  #puts "For story selection, type ‘story'"
+	  #puts "For randomizer, type ‘random'"
+	  #puts "To exit, type ‘exit’"
+	  #puts "                       "
+	#end
   
   def headline_display
     puts "                         "

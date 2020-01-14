@@ -8,10 +8,13 @@ class Controller
     @display = Display.new
   end
   
-  def woke_app
-    Scraper.new
-    @display.welcome_menu
-    puts "         "
+  def welcome
+    puts "                                      "
+    puts "Select by story or use our randomizer."
+	  puts "For story selection, type ‘story'"
+	  puts "For randomizer, type ‘random'"
+	  puts "To exit, type ‘exit’"
+	  puts "                       "
 	  input = gets.strip
 	  if input == "exit"
 	    @display.exit
@@ -20,12 +23,13 @@ class Controller
 		  input_1 = gets.strip
 		  if ["aclu", "amnesty", "hrw", "splc"].include? input_1
 		    @display.story_display(input_1.upcase)
-		    @display.welcome_menu
+		    welcome
+		  end
 		  elsif input == "random"
 	  	@display.randomizer
-	  	@display.welcome_menu
+	  	welcome_menu
 	  else
-		  @display.welcome_menu
+		  welcome_menu
 		end
   end
 end
