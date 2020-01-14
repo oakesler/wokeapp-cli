@@ -3,8 +3,6 @@ require_relative "./01_model.rb"
 
 class Display
   
-  @@news_hash == {}
-  
   def initialize
     @scrape = Scraper.new
     @@news_hash = @scrape.news_hash
