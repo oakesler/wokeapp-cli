@@ -2,11 +2,14 @@ require "./config/environment"
 
 class Controller
   
+  attr_accessor :display
+  
   def initialize
     @display = Display.new
   end
   
   def welcome
+    #binding.pry
     puts "                                      "
     puts "Select by story or use our randomizer."
 	  puts "For story selection, type ‘story'"
