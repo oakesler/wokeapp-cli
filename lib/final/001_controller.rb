@@ -1,12 +1,11 @@
 require "./config/environment"
 
-class Controller
+#class Controller
   
   attr_accessor :news_hash, :current_news
   
   def initialize(news_hash)
-    @news_hash = news_hash
-    @current_news = CurrentNews.new(news_hash)
+    @view = CurrentNews.new(news_hash)
   end
   
   def welcome_menu

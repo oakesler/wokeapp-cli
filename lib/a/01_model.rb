@@ -72,22 +72,16 @@ class Scraper
     end
     step_a_1 = html_doc.css("section#highlighted") 
     step_a_2 = step_a_1.css("div.field-items")
-    @@news_hash["SPLC"]["story_url"] =  = step_a_2.xpath('//div/a/@href')[1].value
+    @@news_hash["SPLC"]["story_url"] = step_a_2.xpath('//div/a/@href')[1].value
     end
-    if !!@source_url.scan(/splc/)
-      html_splc = open("#{the_splc_url_scraper}")
-      doc_splc = Nokogiri::HTML(html_splc)
-      splc_abstract = @html_doc.css("p").first.text
-      if !!splc_abstract.scan(/\w/)
-        splc_abstract
-      else
-        @error_abstract
+    if !!@@news_hash["SPLC"]["story_url"].scan(/splc/)
+      article_html_splc = open("#{@@news_hash["SPLC"]["story_url"]}")
+      doc_splc = Nokogiri::HTML(article_html_splc)
+      @@news_hash["SPLC"]["abstract"] = @html_doc.css("p").first.text
+      if !splc_abstract.scan(/\w/)
+        @@news_hash["SPLC"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
+        @@news_hash["SPLC"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
       end
-    else
-      @error_abstract
     end
-    
-    @@news_hash["SPLC"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
-    @@news_hash["SPLC"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
   end
 end
