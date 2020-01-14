@@ -37,7 +37,7 @@ class Scraper
   #------------------------------------------------------------------------------------# 
   def amnesty_scraper 
     html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
-    @news_hash[:Amnesty]["headline"] = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}"
+    @news_hash[:Amnesty]["headline"] = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}".slice(0, 44)
     if !@news_hash[:Amnesty]["headline"].scan(/\w/)
       @news_hash[:Amnesty]["headline"] = "Sorry, still gathering news from Amnesty International..."
     end
@@ -45,7 +45,7 @@ class Scraper
     @news_hash[:Amnesty]["story_url"] = "https://www.amnesty.org/#{step_1}"
     if !!@news_hash[:Amnesty]["story_url"].scan(/amnesty/)
       article_html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
-      @news_hash[:Amnesty]["abstract"] = article_html_doc.css("p")[6].text
+      @news_hash[:Amnesty]["abstract"] = "#{article_html_doc.css("p").text.slice(0, 175)}..."
     else 
       @news_hash[:Amnesty]["abstract"] = "Sorry, still gathering news from Amnesty International"
       @news_hash[:Amnesty]["story_url"] = "Sorry, still gathering news from Amnesty International"
@@ -59,7 +59,6 @@ class Scraper
       link = html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]
       @news_hash[:HRW]["story_url"] = "https://www.hrw.org#{link}"
     end
-    binding.pry
     if !!@news_hash[:HRW]["story_url"].scan(/hrw/)
       article_html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
       step_1 = article_html_doc.css("p")
