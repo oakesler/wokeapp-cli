@@ -39,7 +39,7 @@ class Display
     puts "...or type 'back' to return to menu"
 		puts "  "
 		input = gets.strip
-		if ["aclu", "amnesty", "hrw", "splc"].include? input
+		if ["aclu", "amnesty", "hrw", "splc", "ACLU", "Amnesty", "AMNESTY", "HRW", "SPLC"].include? input
 		  story_display(input.upcase)
 		  elsif input == "back"
 		  menu
@@ -50,16 +50,16 @@ class Display
 		  
   def story_display(source_name)
     puts "                      "
-    puts "#{@@news_hash[":#{source_name}"]["source"]} -- (#{@news_hash[":#{source_name}"]["source_url"]})"
+    puts "#{@scrape.news_hash[source_name.to_sym]["source"]} -- (#{@scrape.news_hash[source_name.to_sym]["source_url"]})"
     puts "                          "
     puts "------------------------------------------"
-    puts "#{@@news_hash[":#{source_name}"]["headline"]}"
+    puts "#{@scrape.news_hash[source_name.to_sym]["headline"]}"
     puts "------------------------------------------"
     puts "                            "
-    puts "#{@@news_hash[":#{source_name}"]["abstract"]}"
+    puts "#{@scrape.news_hash[source_name.to_sym]["abstract"]}"
     puts "                             "
     puts "Continue reading at"
-    puts "#{@@news_hash[":#{source_name}"]["story_url"]}"
+    puts "#{@scrape.news_hash[source_name.to_sym}]["story_url"]}"
     puts "     "
     menu
   end
@@ -77,19 +77,4 @@ class Display
 		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
 	end
 end
-
-
-  #einput == "random"
-		  #randomizer
-	  	#menu
-	  #else
-	    #menu
-		#end
-  #end
-    
-    #end
-    #puts "                                        "
-    #puts "...or type 'back' to return to menu"
-    #puts "  "
-  #end
   
