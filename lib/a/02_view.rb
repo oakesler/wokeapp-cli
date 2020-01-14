@@ -10,7 +10,7 @@ class Display
     #@@news_hash = @scrape.news_hash
   end
   
-  def welcome
+  def menu
     puts "                                      "
     puts "Select by story or use our randomizer."
 	  puts "For story selection, type ‘story'"
@@ -20,43 +20,34 @@ class Display
 	  input = gets.strip
 	  if input == "exit"
 	    exit_strategy
-		  elsif input == "story"
-		  puts headline_display
-		  puts "...or type 'back' to return to menu"
-		  puts "  "
-		  input_1 = gets.strip
-		  if ["aclu", "amnesty", "hrw", "splc"].include? input_1
-		    story_display(input_1.upcase)
-		    welcome
-		  end
+	    elsif input == "story"
+		  headline_display
 		  elsif input == "random"
 		  randomizer
-	  	welcome_menu
-	  else
-		  welcome_menu
+		else 
+		  menu
 		end
-  end
-end
-  
-  
-  
-  
-  
-  
+	end
+	
   def headline_display
-    #binding.pry
     puts "                         "
     puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
     puts "                          "
     @scrape.news_hash.keys.each do |source|
       puts "#{@scrape.news_hash[source]["source"]} -- #{@scrape.news_hash[source]["headline"]}"
-      puts "    "
     end
-    puts "                                        "
-    #puts "...or type 'back' to return to menu"
-    #puts "  "
-  end
-  
+    puts "...or type 'back' to return to menu"
+		puts "  "
+		input = gets.strip
+		if ["aclu", "amnesty", "hrw", "splc"].include? input
+		  story_display(input.upcase)
+		  elsif input == "back"
+		  menu
+		else 
+		  menu
+		end
+	end
+		  
   def story_display(source_name)
     puts "                      "
     puts "#{@@news_hash[":#{source_name}"]["source"]} -- (#{@news_hash[":#{source_name}"]["source_url"]})"
@@ -70,14 +61,15 @@ end
     puts "Continue reading at"
     puts "#{@@news_hash[":#{source_name}"]["story_url"]}"
     puts "     "
+    menu
   end
   
   def randomizer
     sample_array = ["ACLU", "Amnesty", "HRW", "SPLC"]
     x = sample_array.sample
     story_display(x)
+    menu
   end
-
   
   def exit_strategy
     puts "Thanks for using WokeApp!"
@@ -85,3 +77,19 @@ end
 		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
 	end
 end
+
+
+  #einput == "random"
+		  #randomizer
+	  	#menu
+	  #else
+	    #menu
+		#end
+  #end
+    
+    #end
+    #puts "                                        "
+    #puts "...or type 'back' to return to menu"
+    #puts "  "
+  #end
+  

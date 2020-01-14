@@ -8,7 +8,9 @@ class Controller
     @display = Display.new
   end
   
-  @display.welcome
-  
+  def welcome
+    puts "Welcome to WokeApp!  Please wait a few moments for your summary on today's social justice news..."
+    @display.menu
+  end
 end
   
