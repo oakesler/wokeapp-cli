@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "./config/environment"
+
+puts "Welcome to WokeApp!  Please wait a few moments for your summary on today's social justice news..."
+
+Scraper.new

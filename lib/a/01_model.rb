@@ -2,45 +2,92 @@ require "./config/environment"
 
 class Scraper
   
-  @@all = { }
-  
-  def initialize(url)
-    #@error = "Sorry, still generating this...please check back later!"
-    #@source_url = url
-    #@html_doc = Nokogiri::HTML(open(@source_url))
-    #@headline = self.headline_maker
-  end
-  
+  @@news_hash = {:ACLU => {'source' => 'American Civil Liberties Union', 
+  'source_url' => 'https://www.aclu.org/', 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :Amnesty => {'source' => 'Amnesty International US', 'source_url' => "https://www.amnesty.org/en/", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :HRW => {'source' => 'Human Rights Watch', 'source_url' => "https://www.hrw.org/#", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :SPLC => {'source' => 'Southern Poverty Law Center', 'source_url' => "https://www.splcenter.org", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}}
+ #------------------------------------------------------------------------------------# 
   def aclu_scraper
-    def headline_maker
-    if @source_url == "https://www.aclu.org/"
-      step_1 = @html_doc.css("div#hp__top_spotlight")
-      headline_aclu = step_1.css("div")[4].children[0].text.strip
-      backup_headline = @html_doc.css('span.is-uppercase').text
-      if !!headline_aclu.scan(/\w/) 
-        headline_aclu
-        elsif !!backup_headline.scan(/\w/)
-        backup_headline
-      else
-        @error_headline
-      end
-    
-    if @source_url == "https://www.aclu.org/"
-      step_1 = @html_doc.css("div#hp__top_spotlight")
-      step_2 = step_1.css("a")[0].to_a
-      aclu_url = step_2[0][1]
-      
-      def abstract_maker
-    if !!@source_url.scan(/aclu/)
-      aclu_abstract = "#{@html_doc.css("p")[1].text}     #{@html_doc.css("p")[2].text}"
-      backup_abstract = @html_doc.css("div#tabs").text
-      if !!aclu_abstract.scan(/\w/)
-        aclu_abstract
-        elsif !!backup_abstract.scan(/\w/)
-        backup_abstract
-      else 
-        @error_abstrac
-    
+    html_doc = Nokogiri::HTML(open(@@all["ACLU"]["source_url"]))
+    step_1 = html_doc.css("div#hp__top_spotlight")
+    headline_aclu = step_1.css("div")[4].children[0].text.strip
+    if !!headline_aclu.scan(/\w/)
+      @@news_hash["ACLU"]["headline"] = headline_aclu
+    else
+      @@news_hash["ACLU"]["headline"] = "Sorry, still gathering news from ACLU.org..."
+    end
+    step_1 = html_doc.css("div#hp__top_spotlight")
+    step_2 = step_1.css("a")[0].to_a
+    @@news_hash["ACLU"]["story_url"] = step_2[0][1]
+    if !! @@news_hash["ACLU"]["story_url"].scan(/aclu/)
+      article_html_doc = Nokogiri::HTML(open(@@all["ACLU"]["article_url"]))
+      @@news_hash["ACLU"]["abstract"] = "#{article_html_doc.css("p")[1].text}     #{article_html_doc.css("p")[2].text}"
+    else 
+      @@news_hash["ACLU"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
+      @@news_hash["ACLU"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
+    end
   end 
+  #------------------------------------------------------------------------------------# 
+  def amnesty_scraper 
+    html_doc = Nokogiri::HTML(open(@@all["Amnesty"]["source_url"]))
+    elsif @source_url == "https://www.amnesty.org/en/"
+      headline_amnesty = "#{@html_doc.css('span.heading--tape').text}: #{@html_doc.css('p.image-headline__copy').text}"
+      if headline_amnesty.scan(/\w/)
+        @@news_hash["Amnesty"]["headline"] = headline_amnesty
+      else
+        @@news_hash["Amnesty"]["headline"] = "Sorry, still gathering news from Amnesty International..."
+      end
+      step_1 = html_doc.xpath('//div/a/@href')
+      step_2 = step_1[9].text
+      @@news_hash["Amnesty"]["story_url"] = "https://www.amnesty.org/#{step_2}"
+      if !!@@news_hash["Amnesty"]["story_url"].scan(/amnesty/)
+        @@news_hash["Amnesty"]["abstract"] = @@news_hash["Amnesty"]["story_url"].css("p")[6].text
+      else 
+        @@news_hash["Amnesty"]["abstract"] = "Sorry, still gathering news from Amnesty International"
+        @@news_hash["Amnesty"]["story_url"] = "Sorry, still gathering news from Amnesty International"
+      end
+    end
+  #------------------------------------------------------------------------------------# 
+  def hrw_scraper 
+    html_doc = Nokogiri::HTML(open(@@all["HRW"]["source_url"]))
+    headline_hrw = html_doc.css('h3.billboard-title').text
+    if !!headline_hrw.scan(/\w/)
+      @@news_hash["Amnesty"]["abstract"] = headline_hrw
+    else
+      @@news_hash["Amnesty"]["abstract"] = "Sorry, still gathering news from Human Rights Watch..."
+    end
+    @@news_hash["Amnesty"]["story_url"] == "https://www.hrw.org#{html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]}"
+    if !!@@news_hash["Amnesty"]["story_url"].scan(/hrw/)
+      step_1 = @@news_hash["Amnesty"]["story_url"].css("p")
+      @@news_hash["Amnesty"]["abstract"] = "#{step_1[4].text}   #{step_1[5].text}   #{step_1[6].text}"
+    else
+      @@news_hash["HRW"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
+      @@news_hash["HRW"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
+    end
+  end
+  #------------------------------------------------------------------------------------#
+  def splc_scraper
+    html_doc = Nokogiri::HTML(open(@@all["SPLC"]["source_url"]))
+    @@news_hash["SPLC"]["headline"] = @html_doc.css("h1").first.text
+    if !@@news_hash["SPLC"]["headline"].scan(/\w/)
+      @@news_hash["SPLC"]["headline"] = "Sorry, still gathering news from SPLCenter.org..."
+    end
+    step_a_1 = html_doc.css("section#highlighted") 
+    step_a_2 = step_a_1.css("div.field-items")
+    @@news_hash["SPLC"]["story_url"] =  = step_a_2.xpath('//div/a/@href')[1].value
+    end
+    if !!@source_url.scan(/splc/)
+      html_splc = open("#{the_splc_url_scraper}")
+      doc_splc = Nokogiri::HTML(html_splc)
+      splc_abstract = @html_doc.css("p").first.text
+      if !!splc_abstract.scan(/\w/)
+        splc_abstract
+      else
+        @error_abstract
+      end
+    else
+      @error_abstract
+    end
+    
+    @@news_hash["SPLC"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
+    @@news_hash["SPLC"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
+  end
 end
-  
