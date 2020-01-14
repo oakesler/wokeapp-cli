@@ -41,15 +41,6 @@ class Display
   end
   
   def randomizer
-    
-    
-    
-    
-    
-    
-    
-    
-    
     input = gets.strip
     if input == "1"
       @current_news.source_one.story_display

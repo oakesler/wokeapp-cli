@@ -3,7 +3,7 @@ require "./config/environment"
 class Scraper
   
   @@news_hash = {:ACLU => {'source' => 'American Civil Liberties Union', 
-  'source_url' => 'https://www.aclu.org/', 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :Amnesty => {'source' => 'Amnesty International US', 'source_url' => "https://www.amnesty.org/en/", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :HRW => {'source' => 'Human Rights Watch', 'source_url' => "https://www.hrw.org/#", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :SPLC => {'source' => 'Southern Poverty Law Center', 'source_url' => "https://www.splcenter.org", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}}
+  'source_url' => 'https://www.aclu.org/', 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :Amnesty => {'source' => 'Amnesty International', 'source_url' => "https://www.amnesty.org/en/", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :HRW => {'source' => 'Human Rights Watch', 'source_url' => "https://www.hrw.org/#", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :SPLC => {'source' => 'Southern Poverty Law Center', 'source_url' => "https://www.splcenter.org", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}}
  #------------------------------------------------------------------------------------# 
   def aclu_scraper
     html_doc = Nokogiri::HTML(open(@@all["ACLU"]["source_url"]))

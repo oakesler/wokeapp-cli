@@ -19,8 +19,13 @@ class Controller
 		  puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
 		  elsif input == "story"
 		  @display.headline_display
+		  input_1 = gets.strip
+		  if ["aclu", "amnesty", "hrw", "splc"].include? input_1
+		    @display.story_display(input_1.upcase)
+		    welcome_menu
 		  elsif input == "random"
 	  	@display.randomizer
+	  	welcome_menu
 	  else
 		  @display.welcome_menu
 		end
