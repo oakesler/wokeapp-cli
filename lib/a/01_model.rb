@@ -28,23 +28,20 @@ class Scraper
   #------------------------------------------------------------------------------------# 
   def amnesty_scraper 
     html_doc = Nokogiri::HTML(open(@@all["Amnesty"]["source_url"]))
-    elsif @source_url == "https://www.amnesty.org/en/"
-      headline_amnesty = "#{@html_doc.css('span.heading--tape').text}: #{@html_doc.css('p.image-headline__copy').text}"
-      if headline_amnesty.scan(/\w/)
-        @@news_hash["Amnesty"]["headline"] = headline_amnesty
-      else
-        @@news_hash["Amnesty"]["headline"] = "Sorry, still gathering news from Amnesty International..."
-      end
-      step_1 = html_doc.xpath('//div/a/@href')
-      step_2 = step_1[9].text
-      @@news_hash["Amnesty"]["story_url"] = "https://www.amnesty.org/#{step_2}"
-      if !!@@news_hash["Amnesty"]["story_url"].scan(/amnesty/)
-        @@news_hash["Amnesty"]["abstract"] = @@news_hash["Amnesty"]["story_url"].css("p")[6].text
-      else 
-        @@news_hash["Amnesty"]["abstract"] = "Sorry, still gathering news from Amnesty International"
-        @@news_hash["Amnesty"]["story_url"] = "Sorry, still gathering news from Amnesty International"
-      end
+    @@news_hash["Amnesty"]["headline"] = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}"
+    if !@@news_hash["Amnesty"]["headline"].scan(/\w/)
+      @@news_hash["Amnesty"]["headline"] = "Sorry, still gathering news from Amnesty International..."
     end
+    step_1 = html_doc.xpath('//div/a/@href')
+    step_2 = step_1[9].text
+    @@news_hash["Amnesty"]["story_url"] = "https://www.amnesty.org/#{step_2}"
+    if !!@@news_hash["Amnesty"]["story_url"].scan(/amnesty/)
+      @@news_hash["Amnesty"]["abstract"] = @@news_hash["Amnesty"]["story_url"].css("p")[6].text
+    else 
+      @@news_hash["Amnesty"]["abstract"] = "Sorry, still gathering news from Amnesty International"
+      @@news_hash["Amnesty"]["story_url"] = "Sorry, still gathering news from Amnesty International"
+    end
+  end
   #------------------------------------------------------------------------------------# 
   def hrw_scraper 
     html_doc = Nokogiri::HTML(open(@@all["HRW"]["source_url"]))
@@ -73,15 +70,13 @@ class Scraper
     step_a_1 = html_doc.css("section#highlighted") 
     step_a_2 = step_a_1.css("div.field-items")
     @@news_hash["SPLC"]["story_url"] = step_a_2.xpath('//div/a/@href')[1].value
-    end
     if !!@@news_hash["SPLC"]["story_url"].scan(/splc/)
       article_html_splc = open("#{@@news_hash["SPLC"]["story_url"]}")
       doc_splc = Nokogiri::HTML(article_html_splc)
       @@news_hash["SPLC"]["abstract"] = @html_doc.css("p").first.text
-      if !splc_abstract.scan(/\w/)
-        @@news_hash["SPLC"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
-        @@news_hash["SPLC"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
-      end
+    else 
+      @@news_hash["SPLC"]["abstract"] = "Sorry, still gathering news from ACLU.org..."
+      @@news_hash["SPLC"]["story_url"] = "Sorry, still gathering news from ACLU.org..."
     end
   end
 end

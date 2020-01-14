@@ -1,3 +1,5 @@
+require "./config/environment"
+
 class Display
   
   def initialize
@@ -10,15 +12,15 @@ class Display
 	  puts "For story selection, type ‘story'"
 	  puts "For randomizer, type ‘random'"
 	  puts "To exit, type ‘exit’"
-	  puts "    "
+	  puts "                       "
 	end
   
   def headline_display
     puts "                         "
-    puts "Please select a headline by entering its source"
-    puts "   "
+    puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
+    puts "                          "
     @@news_hash.each do |source|
-      puts "#{x}. #{source["source"} -- #{source["headline"]}"
+      puts "#{x}. #{source["source"]} -- #{source["headline"]}"
     end
     puts "                                        "
     puts "...or type 'back' to return to menu"
@@ -41,22 +43,15 @@ class Display
   end
   
   def randomizer
-    input = gets.strip
-    if input == "1"
-      @current_news.source_one.story_display
-      headline_display
-      elsif input == "2"
-      @current_news.source_two.story_display
-      headline_display
-      elsif input == "3"
-      @current_news.source_three.story_display
-      headline_display
-      elsif input == "4"
-      @current_news.source_four.story_display
-      headline_display
-      elsif input == "back"
-      welcome_menu
-    else 
-      welcome_menu
-    end
+    sample_array = ["ACLU", "Amnesty", "HRW", "SPLC"]
+    x = sample_array.sample
+    story_display(x)
   end
+
+  
+  def exit
+    puts "Thanks for using WokeApp!"
+		puts "       "
+		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
+	end
+end
