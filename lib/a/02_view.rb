@@ -3,16 +3,18 @@ require_relative "./01_model.rb"
 
 class Display
   
+  attr_accessor :scrape
+  
   def initialize
     @scrape = Scraper.new
-    @@news_hash = @scrape.news_hash
+    #@@news_hash = @scrape.news_hash
   end
   
   def headline_display
     puts "                         "
     puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
     puts "                          "
-    @@news_hash.each do |source|
+    @scrape.news_hash.each do |source|
       puts "#{x}. #{source["source"]} -- #{source["headline"]}"
     end
     puts "                                        "

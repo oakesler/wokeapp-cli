@@ -43,7 +43,8 @@ class Scraper
     step_1 = html_doc.xpath('//div/a/@href').text
     @@news_hash[:Amnesty]["story_url"] = "https://www.amnesty.org/#{step_1}"
     if !!@@news_hash[:Amnesty]["story_url"].scan(/amnesty/)
-      @@news_hash[:Amnesty]["abstract"] = @@news_hash[:Amnesty]["story_url"].css("p")[6].text
+      article_html_doc = Nokogiri::HTML(open(@@news_hash[:Amnesty]["source_url"]))
+      @@news_hash[:Amnesty]["abstract"] = article_html_doc.css("p")[6].text
     else 
       @@news_hash[:Amnesty]["abstract"] = "Sorry, still gathering news from Amnesty International"
       @@news_hash[:Amnesty]["story_url"] = "Sorry, still gathering news from Amnesty International"
@@ -60,7 +61,8 @@ class Scraper
     end
     @@news_hash[:Amnesty]["story_url"] == "https://www.hrw.org#{html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]}"
     if !!@@news_hash[:Amnesty]["story_url"].scan(/hrw/)
-      step_1 = @@news_hash[:Amnesty]["story_url"].css("p")
+      article_html_doc = Nokogiri::HTML(open(@@news_hash[:Amnesty]["source_url"]))
+      step_1 = article_html_doc.css("p")
       @@news_hash[:Amnesty]["abstract"] = "#{step_1[4].text}   #{step_1[5].text}   #{step_1[6].text}"
     else
       @@news_hash[:HRW]["abstract"] = "Sorry, still gathering news from ACLU.org..."
@@ -70,7 +72,7 @@ class Scraper
   #------------------------------------------------------------------------------------#
   def splc_scraper
     html_doc = Nokogiri::HTML(open(@@news_hash[:SPLC]["source_url"]))
-    @@news_hash[:SPLC]["headline"] = @@html_doc.css("h1").first.text
+    @@news_hash[:SPLC]["headline"] = html_doc.css("h1").first.text
     if !@@news_hash[:SPLC]["headline"].scan(/\w/)
       @@news_hash[:SPLC]["headline"] = "Sorry, still gathering news from SPLCenter.org..."
     end
@@ -78,9 +80,8 @@ class Scraper
     step_a_2 = step_a_1.css("div.field-items")
     @@news_hash[:SPLC]["story_url"] = step_a_2.xpath('//div/a/@href')[1].value
     if !!@@news_hash[:SPLC]["story_url"].scan(/splc/)
-      article_html_splc = open("#{@@news_hash[:SPLC]["story_url"]}")
-      doc_splc = Nokogiri::HTML(article_html_splc)
-      @@news_hash[:SPLC]["abstract"] = @@html_doc.css("p").first.text
+      article_html_doc = Nokogiri::HTML(open(@@news_hash[:SPLC]["story_url"]))
+      @@news_hash[:SPLC]["abstract"] = article_html_doc.css("p").first.text
     else 
       @@news_hash[:SPLC]["abstract"] = "Sorry, still gathering news from ACLU.org..."
       @@news_hash[:SPLC]["story_url"] = "Sorry, still gathering news from ACLU.org..."
