@@ -2,8 +2,6 @@ require "./config/environment"
 
 class Controller
   
-  attr_accessor :news_hash, :current_news
-  
   def initialize
     @display = Display.new
   end
