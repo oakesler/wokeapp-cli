@@ -52,16 +52,18 @@ class Scraper
     end
   end
   #------------------------------------------------------------------------------------# 
-  def hrw_scraper 
+  def hrw_scraper
     html_doc = Nokogiri::HTML(open(@news_hash[:HRW]["source_url"]))
     @news_hash[:HRW]["headline"] = html_doc.css('h3.billboard-title').text
     if !!@news_hash[:HRW]["headline"].scan(/\w/)
-      @news_hash[:HRW]["story_url"] == "https://www.hrw.org#{html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]}"
+      link = html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]
+      @news_hash[:HRW]["story_url"] = "https://www.hrw.org#{link}"
     end
+    binding.pry
     if !!@news_hash[:HRW]["story_url"].scan(/hrw/)
       article_html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
       step_1 = article_html_doc.css("p")
-      @news_hash[:HRW]["abstract"] = "#{step_1[4].text}   #{step_1[5].text}   #{step_1[6].text}"
+      @news_hash[:HRW]["abstract"] = "#{step_1.text.slice(0, 270)}..."
     else
       @news_hash[:HRW]["headline"] = "Sorry, still gathering news from ACLU.org..."
       @news_hash[:HRW]["abstract"] = "Sorry, still gathering news from ACLU.org..."
