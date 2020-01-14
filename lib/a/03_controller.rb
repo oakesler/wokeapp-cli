@@ -20,11 +20,9 @@ class Controller
 	  if input == "exit"
 	    @display.exit
 		  elsif input == "story"
-		  @display.headline_display
-		  ####
+		  puts @display.headline_display
 		  puts "...or type 'back' to return to menu"
 		  puts "  "
-		  ####
 		  input_1 = gets.strip
 		  if ["aclu", "amnesty", "hrw", "splc"].include? input_1
 		    @display.story_display(input_1.upcase)

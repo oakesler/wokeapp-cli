@@ -16,8 +16,8 @@ class Display
     puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
     puts "                          "
     @scrape.news_hash.keys.each do |source|
-      #puts "#{source["source"]} -- #{source["headline"]}"
-      puts "#{@scrape.news_hash[source]["source"]}"
+      puts "#{@scrape.news_hash[source]["source"]} -- #{@scrape.news_hash[source]["headline"]}"
+      puts "    "
     end
     puts "                                        "
     #puts "...or type 'back' to return to menu"
