@@ -40,10 +40,12 @@ class Display
 		puts "  "
 		input = gets.strip
 		if ["aclu", "amnesty", "hrw", "splc", "ACLU", "Amnesty", "AMNESTY", "HRW", "SPLC"].include? input
-		  story_display(input.upcase)
-		  elsif input == "back"
-		  menu
-		else 
+		  if !!input.match(/amnesty/i)
+		    story_display(input.capitalize)
+		  else 
+		    story_display(input.upcase)
+		  end
+		else
 		  menu
 		end
 	end
@@ -59,7 +61,7 @@ class Display
     puts "#{@scrape.news_hash[source_name.to_sym]["abstract"]}"
     puts "                             "
     puts "Continue reading at"
-    puts "#{@scrape.news_hash[source_name.to_sym}]["story_url"]}"
+    puts "#{@scrape.news_hash[source_name.to_sym]["story_url"]}"
     puts "     "
     menu
   end
@@ -68,10 +70,10 @@ class Display
     sample_array = ["ACLU", "Amnesty", "HRW", "SPLC"]
     x = sample_array.sample
     story_display(x)
-    menu
   end
   
   def exit_strategy
+    puts "     "
     puts "Thanks for using WokeApp!"
 		puts "       "
 		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
