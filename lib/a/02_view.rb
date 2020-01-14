@@ -11,16 +11,17 @@ class Display
   end
   
   def headline_display
-    binding.pry
+    #binding.pry
     puts "                         "
     puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
     puts "                          "
     @scrape.news_hash.keys.each do |source|
-      puts "#{source["source"]} -- #{source["headline"]}"
+      #puts "#{source["source"]} -- #{source["headline"]}"
+      puts "#{@scrape.news_hash[source]["source"]}"
     end
     puts "                                        "
-    puts "...or type 'back' to return to menu"
-    puts "  "
+    #puts "...or type 'back' to return to menu"
+    #puts "  "
   end
   
   def story_display(source_name)
