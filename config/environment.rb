@@ -1,9 +1,14 @@
 require 'bundler/setup'
 Bundler.require(:default, :development)
 
-require_relative "../lib/a/01_model.rb"
-require_relative "../lib/a/02_view.rb"
-require_relative "../lib/a/03_controller.rb"
+require_relative "../lib/third_attempt/01_controller.rb"
+require_relative "../lib/third_attempt/02_story.rb"
+require_relative "../lib/third_attempt/03_scraper.rb"
+
+
+#require_relative "../lib/a/01_model.rb"
+#require_relative "../lib/a/02_view.rb"
+#require_relative "../lib/a/03_controller.rb"
 
 #require_relative "../lib/final/001_controller.rb"
 #require_relative "../lib/final/002_current_news.rb"
