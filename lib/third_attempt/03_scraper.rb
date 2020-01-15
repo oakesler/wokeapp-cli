@@ -37,7 +37,6 @@ class Scraper
     @amnesty_story = Story.new  
     @amnesty_story.source_url = "https://www.amnesty.org/en/"
     @amnesty_story.source = "Amnesty International"
-    #------------------------------------------------------------------------------------#
     html_doc = Nokogiri::HTML(open(@amnesty_story.source_url))
     @amnesty_story.headline = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}".slice(0, 44)
     if !@amnesty_story.headline.scan(/\w/)
@@ -54,28 +53,25 @@ class Scraper
     end
   end
  
- 
- 
- 
   def hrw_scraper
     @hrw_story = Story.new 
     @hrw_story.source_url = "https://www.hrw.org/#"
     @hrw_story.source = "HRW"
     #------------------------------------------------------------------------------------#
-    html_doc = Nokogiri::HTML(open(@news_hash[:HRW]["source_url"]))
-    @news_hash[:HRW]["headline"] = html_doc.css('h3.billboard-title').text
-    if !!@news_hash[:HRW]["headline"].scan(/\w/)
+    html_doc = Nokogiri::HTML(open(@hrw_story.source_url))
+    @hrw_story.headline = html_doc.css('h3.billboard-title').text
+    if !!@hrw_story.headline.scan(/\w/)
       link = html_doc.css("h3.billboard-title a").map { |link| link["href"] }[0]
-      @news_hash[:HRW]["story_url"] = "https://www.hrw.org#{link}"
+      @hrw_story.story_url = "https://www.hrw.org#{link}"
     end
-    if !!@news_hash[:HRW]["story_url"].scan(/hrw/)
-      article_html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
+    if !!@hrw_story.story_url.scan(/hrw/)
+      article_html_doc = Nokogiri::HTML(open(@hrw_story.source_url))
       step_1 = article_html_doc.css("p")
-      @news_hash[:HRW]["abstract"] = "#{step_1.text.slice(0, 270)}..."
+      @hrw_story.abstract = "#{step_1.text.slice(0, 270)}..."
     else
-      @news_hash[:HRW]["headline"] = "Sorry, still gathering news from ACLU.org..."
-      @news_hash[:HRW]["abstract"] = "Sorry, still gathering news from ACLU.org..."
-      @news_hash[:HRW]["story_url"] = "Sorry, still gathering news from ACLU.org..."
+      @hrw_story.headline = "Sorry, still gathering news from ACLU.org..."
+      @hrw_story.abstract = "Sorry, still gathering news from ACLU.org..."
+      @hrw_story.story_url = "Sorry, still gathering news from ACLU.org..."
     end
   end
  
@@ -103,6 +99,3 @@ class Scraper
   end
 end
 end
-
-
- :HRW => {'source' => 'Human Rights Watch', 'source_url' => "https://www.hrw.org/#", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :SPLC => {'source' => 'Southern Poverty Law Center', 'source_url' => "https://www.splcenter.org", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}}
