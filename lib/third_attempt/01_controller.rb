@@ -3,12 +3,9 @@ require "./config/environment"
 require_relative "./01_model.rb"
 
 class Controller
-  
-  attr_accessor :scrape
 
   def initialize
-    @scrape = Scraper.new
-    #@@news_hash = @scrape.news_hash
+    
   end
   
   def menu

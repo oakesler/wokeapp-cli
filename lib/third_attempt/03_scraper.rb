@@ -8,7 +8,10 @@ class Scraper
   
   def aclu_scraper
     @aclu_story = Story.new
-    html_doc = Nokogiri::HTML(open(@news_hash[:ACLU]["source_url"]))
+    @aclu_story.source_url = 'https://www.aclu.org/'
+    @aclu_story.source = "ACLU"
+    #------------------------------------------------------------------------------------#
+    html_doc = Nokogiri::HTML(open(@aclu_story.source_url))
     step_1 = html_doc.css("div#hp__top_spotlight")
     headline_aclu = step_1.css("div")[4].children[0].text.strip
     if !!headline_aclu.scan(/\w/)
@@ -27,25 +30,38 @@ class Scraper
       @aclu_story.story_url = "Sorry, still gathering news from ACLU.org..."
     end
   end 
-  #------------------------------------------------------------------------------------# 
+  
+  
+  
   def amnesty_scraper 
-    html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
-    @news_hash[:Amnesty]["headline"] = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}".slice(0, 44)
-    if !@news_hash[:Amnesty]["headline"].scan(/\w/)
-      @news_hash[:Amnesty]["headline"] = "Sorry, still gathering news from Amnesty International..."
+    @amnesty_story = Story.new  
+    @amnesty_story.source_url = "https://www.amnesty.org/en/"
+    @amnesty_story.source = "Amnesty International"
+    #------------------------------------------------------------------------------------#
+    html_doc = Nokogiri::HTML(open(@amnesty_story.source_url))
+    @amnesty_story.headline = "#{html_doc.css('span.heading--tape').text}: #{html_doc.css('p.image-headline__copy').text}".slice(0, 44)
+    if !@amnesty_story.headline.scan(/\w/)
+      @amnesty_story.headline = "Sorry, still gathering news from Amnesty International..."
     end
     step_1 = html_doc.xpath('//div/a/@href').text
-    @news_hash[:Amnesty]["story_url"] = "https://www.amnesty.org/#{step_1}"
-    if !!@news_hash[:Amnesty]["story_url"].scan(/amnesty/)
-      article_html_doc = Nokogiri::HTML(open(@news_hash[:Amnesty]["source_url"]))
-      @news_hash[:Amnesty]["abstract"] = "#{article_html_doc.css("p").text.slice(0, 175)}..."
+    @amnesty_story.story_url = "https://www.amnesty.org/#{step_1}"
+    if !!@amnesty_story.story_url.scan(/amnesty/)
+      article_html_doc = Nokogiri::HTML(open(@amnesty_story.source_url))
+      @amnesty_story.abstract = "#{article_html_doc.css("p").text.slice(0, 175)}..."
     else 
-      @news_hash[:Amnesty]["abstract"] = "Sorry, still gathering news from Amnesty International"
-      @news_hash[:Amnesty]["story_url"] = "Sorry, still gathering news from Amnesty International"
+      @amnesty_story.abstract = "Sorry, still gathering news from Amnesty International"
+      @amnesty_story.story_url = "Sorry, still gathering news from Amnesty International"
     end
   end
-  #------------------------------------------------------------------------------------# 
+ 
+ 
+ 
+ 
   def hrw_scraper
+    @hrw_story = Story.new 
+    @hrw_story.source_url = "https://www.hrw.org/#"
+    @hrw_story.source = "HRW"
+    #------------------------------------------------------------------------------------#
     html_doc = Nokogiri::HTML(open(@news_hash[:HRW]["source_url"]))
     @news_hash[:HRW]["headline"] = html_doc.css('h3.billboard-title').text
     if !!@news_hash[:HRW]["headline"].scan(/\w/)
@@ -62,8 +78,13 @@ class Scraper
       @news_hash[:HRW]["story_url"] = "Sorry, still gathering news from ACLU.org..."
     end
   end
-  #------------------------------------------------------------------------------------#
+ 
+ 
+ 
   def splc_scraper
+    @splc_story = Story.new 
+    @splc_story.source_url = "https://www.hrw.org/#"
+    @splc_story.source = "SPLC"
     html_doc = Nokogiri::HTML(open(@news_hash[:SPLC]["source_url"]))
     @news_hash[:SPLC]["headline"] = html_doc.css("h1").first.text
     if !@news_hash[:SPLC]["headline"].scan(/\w/)
@@ -82,3 +103,6 @@ class Scraper
   end
 end
 end
+
+
+ :HRW => {'source' => 'Human Rights Watch', 'source_url' => "https://www.hrw.org/#", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}, :SPLC => {'source' => 'Southern Poverty Law Center', 'source_url' => "https://www.splcenter.org", 'headline' => ' ', 'story_url' => ' ', 'abstract' => ' '}}
