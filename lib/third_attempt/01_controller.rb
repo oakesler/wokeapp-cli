@@ -1,10 +1,7 @@
 require "./config/environment"
-require_relative "./01_model.rb"
 
 class Controller
   
-  array = []
-
   def initialize
     @scraper = Scraper.new
   end
@@ -28,29 +25,24 @@ class Controller
 		end
 	end
 	
-  def headline_display
+	def headline_display
     x = 1
     puts "                         "
     puts "Please select a headline by entering its number (1-4):"
     puts "                          "
-    Story.all do |item|
-      puts "#{x} #{item.source"} -- #{item.headline}"
-      array << "#{x} #{item.source"} -- #{item.headline}"
+    Story.all.each do |item|
+      puts "#{x} #{item.source} -- #{item.headline}"
       x += 1
     end
     puts "...or type 'back' to return to menu"
-		puts "  "
+		puts "               "
 		input = gets.strip
-		if [1, 2, 3, 4].include? input
-		  array.each do |item|
-		    if item.include? input
-		      story_display(input)
-		    end
-		  end
+		if [1, 2, 3, 4].include?(input)
+		  story_display(input)
 		else
 		  menu 
 	  end
-	end
+  end
 		  
   def story_display(index)
     @story = Story.all[index]
@@ -81,5 +73,4 @@ class Controller
 		puts "       "
 		puts "Questions? Comments? Email the WokeApp team at o.a.koenig@gmail.com"
 	end
-end
 end

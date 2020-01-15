@@ -1,3 +1,5 @@
+require "./config/environment"
+
 class Story
   
   attr_accessor :source, :source_url, :headline, :abstract, :story_url

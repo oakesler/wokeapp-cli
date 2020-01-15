@@ -1,9 +1,8 @@
+require "./config/environment"
+
 class Scraper
   
-  #@@all = []
-  
   def initialize 
-    #@@all << self
     aclu_scraper
     amnesty_scraper
     hrw_scraper
@@ -80,7 +79,7 @@ class Scraper
  
   def splc_scraper
     @splc_story = Story.new 
-    @splc_story.source_url = "https://www.hrw.org/#"
+    @splc_story.source_url = "https://www.splcenter.org"
     @splc_story.source = "SPLC"
     html_doc = Nokogiri::HTML(open(@splc_story.source_url))
     @splc_story.headline = html_doc.css("h1").first.text
