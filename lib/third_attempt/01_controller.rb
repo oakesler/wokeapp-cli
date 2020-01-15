@@ -1,11 +1,10 @@
-
 require "./config/environment"
 require_relative "./01_model.rb"
 
 class Controller
 
   def initialize
-    
+    Scraper.new
   end
   
   def menu

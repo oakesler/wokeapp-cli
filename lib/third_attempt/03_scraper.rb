@@ -1,16 +1,19 @@
 class Scraper
   
-  @@all = []
+  #@@all = []
   
   def initialize 
-    @@all << self
+    #@@all << self
+    aclu_scraper
+    amnesty_scraper
+    hrw_scraper
+    splc_scraper
   end
   
   def aclu_scraper
     @aclu_story = Story.new
     @aclu_story.source_url = 'https://www.aclu.org/'
     @aclu_story.source = "ACLU"
-    #------------------------------------------------------------------------------------#
     html_doc = Nokogiri::HTML(open(@aclu_story.source_url))
     step_1 = html_doc.css("div#hp__top_spotlight")
     headline_aclu = step_1.css("div")[4].children[0].text.strip
@@ -75,27 +78,24 @@ class Scraper
     end
   end
  
- 
- 
   def splc_scraper
     @splc_story = Story.new 
     @splc_story.source_url = "https://www.hrw.org/#"
     @splc_story.source = "SPLC"
-    html_doc = Nokogiri::HTML(open(@news_hash[:SPLC]["source_url"]))
-    @news_hash[:SPLC]["headline"] = html_doc.css("h1").first.text
-    if !@news_hash[:SPLC]["headline"].scan(/\w/)
-      @news_hash[:SPLC]["headline"] = "Sorry, still gathering news from SPLCenter.org..."
+    html_doc = Nokogiri::HTML(open(@splc_story.source_url))
+    @splc_story.headline = html_doc.css("h1").first.text
+    if !@splc_story.headline.scan(/\w/)
+      @splc_story.headline = "Sorry, still gathering news from SPLCenter.org..."
     end
     step_a_1 = html_doc.css("section#highlighted") 
     step_a_2 = step_a_1.css("div.field-items")
-    @news_hash[:SPLC]["story_url"] = step_a_2.xpath('//div/a/@href')[1].value
-    if !!@news_hash[:SPLC]["story_url"].scan(/splc/)
-      article_html_doc = Nokogiri::HTML(open(@news_hash[:SPLC]["story_url"]))
-      @news_hash[:SPLC]["abstract"] = article_html_doc.css("p").first.text
+    @splc_story.story_url = step_a_2.xpath('//div/a/@href')[1].value
+    if !!@splc_story.story_url.scan(/splc/)
+      article_html_doc = Nokogiri::HTML(open(@splc_story.story_url))
+      @splc_story.abstract = article_html_doc.css("p").first.text
     else 
-      @news_hash[:SPLC]["abstract"] = "Sorry, still gathering news from ACLU.org..."
-      @news_hash[:SPLC]["story_url"] = "Sorry, still gathering news from ACLU.org..."
+      @splc_story.abstract = "Sorry, still gathering news from ACLU.org..."
+      @splc_story.story_url = "Sorry, still gathering news from ACLU.org..."
     end
   end
-end
 end
