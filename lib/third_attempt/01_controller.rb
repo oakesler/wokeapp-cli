@@ -2,9 +2,11 @@ require "./config/environment"
 require_relative "./01_model.rb"
 
 class Controller
+  
+  array = []
 
   def initialize
-    Scraper.new
+    @scraper = Scraper.new
   end
   
   def menu
@@ -27,15 +29,30 @@ class Controller
 	end
 	
   def headline_display
+    x = 1
     puts "                         "
-    puts "Please select a headline by entering its source (ACLU, Amnesty, HRW, SPLC)"
+    puts "Please select a headline by entering its number (1-4):"
     puts "                          "
-    @scrape.news_hash.keys.each do |source|
-      puts "#{@scrape.news_hash[source]["source"]} -- #{@scrape.news_hash[source]["headline"]}"
+    Story.all do |item|
+      puts "#{x} #{item.source"} -- #{item.headline}"
+      array << "#{x} #{item.source"} -- #{item.headline}"
+      x += 1
     end
     puts "...or type 'back' to return to menu"
 		puts "  "
 		input = gets.strip
+		array.each do |item|
+		  if item.include? input
+		    story_display(input)
+		  end
+		end
+		
+		  
+		
+		
+		
+		
+		
 		if ["aclu", "amnesty", "hrw", "splc", "ACLU", "Amnesty", "AMNESTY", "HRW", "SPLC"].include? input
 		  if !!input.match(/amnesty/i)
 		    story_display(input.capitalize)
