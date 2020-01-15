@@ -37,8 +37,8 @@ class Controller
     puts "...or type 'back' to return to menu"
 		puts "               "
 		input = gets.strip
-		if [1, 2, 3, 4].include?(input)
-		  story_display(input)
+		if ["1", "2", "3", "4"].include?(input)
+		  story_display(input.to_i)
 		else
 		  menu 
 	  end
