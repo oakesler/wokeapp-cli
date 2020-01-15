@@ -41,47 +41,36 @@ class Controller
     puts "...or type 'back' to return to menu"
 		puts "  "
 		input = gets.strip
-		array.each do |item|
-		  if item.include? input
-		    story_display(input)
-		  end
-		end
-		
-		  
-		
-		
-		
-		
-		
-		if ["aclu", "amnesty", "hrw", "splc", "ACLU", "Amnesty", "AMNESTY", "HRW", "SPLC"].include? input
-		  if !!input.match(/amnesty/i)
-		    story_display(input.capitalize)
-		  else 
-		    story_display(input.upcase)
+		if [1, 2, 3, 4].include? input
+		  array.each do |item|
+		    if item.include? input
+		      story_display(input)
+		    end
 		  end
 		else
-		  menu
-		end
+		  menu 
+	  end
 	end
 		  
-  def story_display(source_name)
+  def story_display(index)
+    @story = Story.all[index]
     puts "                      "
-    puts "#{@scrape.news_hash[source_name.to_sym]["source"]} -- (#{@scrape.news_hash[source_name.to_sym]["source_url"]})"
+    puts "#{@story.source} -- (#{@story.source_url})"
     puts "                          "
     puts "------------------------------------------"
-    puts "#{@scrape.news_hash[source_name.to_sym]["headline"]}"
+    puts "#{@story.headline}"
     puts "------------------------------------------"
     puts "                            "
-    puts "#{@scrape.news_hash[source_name.to_sym]["abstract"]}"
+    puts "#{@story.abstract}"
     puts "                             "
     puts "Continue reading at"
-    puts "#{@scrape.news_hash[source_name.to_sym]["story_url"]}"
+    puts "#{@story.story_url}"
     puts "     "
     menu
   end
   
   def randomizer
-    sample_array = ["ACLU", "Amnesty", "HRW", "SPLC"]
+    sample_array = [1, 2, 3, 4]
     x = sample_array.sample
     story_display(x)
   end
