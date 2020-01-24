@@ -1,8 +1,13 @@
 # Wokeapp::Cli
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/wokeapp/cli`. To experiment with that code, run `bin/console` for an interactive prompt.
+A gem that provides current headlines from humanitarian/social justice news sources.
 
-TODO: Delete this and the text above, and describe your gem
+To run in IDE:
+1) cd ./wokeapp-cli
+2) run "bundle install"
+3) run "ruby bin/exec"
+
+Enjoy!!
 
 ## Installation
 
